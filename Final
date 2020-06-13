@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+
+void servicioad(int total){
+		int opc, servicio=25;	
+		do{
+	cout<<"\nEl paciente necesito algun servicio adicional? ($25)\n";
+		cout<<"1---si\n";
+		cout<<"2---no\n";
+			cin>>opc;
+	}while(opc<1 || opc>2);
+		if (opc == 1){
+			cout<<"\n*******************\n";
+			cout<<"El total es: "<<total+servicio<<endl;
+			cout<<"\n*******************\n";
+		}else if (opc == 2){
+			cout<<"\n*******************\n";
+			cout<<"El total es: "<<total<<endl;
+			cout<<"\n*******************\n";
+	}
+}
+
+void diasad(int aux){
+	int dias, ad=70, total=0;
+	do{
+	cout<<"\nIngrese los dias de estancia\n";
+		cin>>dias;
+	}while(dias<1 || dias>99);
+			total=(aux*dias)+ad;
+		cout<<"El total por los "<<dias<<" dias es $"<<total<<endl;
+			servicioad(total);
+}
+
+void dias(int aux){
+	int dias, totald;
+	do{
+	cout<<"\nIngrese los dias de estancia\n";
+		cin>>dias;
+	}while(dias<1 || dias>99);
+			totald=dias*aux;
+		cout<<"*El total por los "<<dias<<" dias es $"<<totald<<"*"<<endl;
+			servicioad(totald);
+}
+
+void VerificarEdad(int aux){
+		int edad;
+	do{
+	cout<<"Ingrese la edad del paciente\n";
+		cin>>edad;
+	}while(edad<1 || edad>99);
+	
+		if(edad>=1 && edad<=12){
+			cout<<"No crea ningun gasto adicional\n";
+				dias(aux);
+		}else if (edad >= 13 && edad<=99){
+			cout<<"\n*Se le hara un costo adicional*($70)\n";
+				diasad(aux);
+	}
+}
+
+void menu(){
+	int opcion, aux;
+		cout<<"\nLas enfermedades y sus precios son: \n";
+			cout<<"Enfermedad 1--$2500\n";
+			cout<<"Enfermedad 2--$1600\n";		
+			cout<<"Enfermedad 3--$1000\n";
+			cout<<"salir------4\n";
+				cin>>opcion;
+	switch(opcion){
+		case 1: 
+			VerificarEdad(aux=2500);
+			return menu();
+			break;
+		case 2: 
+			VerificarEdad(aux=1600);
+			return menu();
+			break;
+		case 3: 
+			VerificarEdad(aux=1000);
+			return menu();
+			break;
+		case 4: 
+			cout<<"Fin del programa\n";
+			break;
+		default:
+			cout<<"*************\n";
+			cout<<"Error\n";
+			cout<<"*************\n";
+			return menu();
+	}
+}
+
+int main(){
+	menu();
+}
