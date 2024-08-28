@@ -1,0 +1,107 @@
+#include <iostream>
+using namespace std;
+
+// Constantes para los costos
+const int SERVICIO_ADICIONAL = 25;
+const int COSTO_ADICIONAL = 70;
+const int COSTO_ENFERMEDAD_1 = 2500;
+const int COSTO_ENFERMEDAD_2 = 1600;
+const int COSTO_ENFERMEDAD_3 = 1000;
+
+void mostrarTotal(int total) {
+    cout << "\n*******************\n";
+    cout << "El total es: $" << total << endl;
+    cout << "*******************\n";
+}
+
+int solicitarServicioAdicional(int total) {
+    int opc;
+    do {
+        cout << "\n¿El paciente necesita algún servicio adicional? ($25)\n";
+        cout << "1---Sí\n";
+        cout << "2---No\n";
+        cin >> opc;
+    } while(opc < 1 || opc > 2);
+
+    if (opc == 1) {
+        total += SERVICIO_ADICIONAL;
+    }
+    mostrarTotal(total);
+    return total;
+}
+
+int calcularTotalEstancia(int costoBase, int dias) {
+    return costoBase * dias;
+}
+
+void procesarEstancia(int costoBase, bool aplicarAdicional) {
+    int dias;
+    do {
+        cout << "\nIngrese los días de estancia: ";
+        cin >> dias;
+    } while(dias < 1 || dias > 99);
+
+    int total = calcularTotalEstancia(costoBase, dias);
+    if (aplicarAdicional) {
+        total += COSTO_ADICIONAL;
+    }
+    cout << "El total por los " << dias << " días es: $" << total << endl;
+    solicitarServicioAdicional(total);
+}
+
+void verificarEdad(int costoBase) {
+    int edad;
+    do {
+        cout << "Ingrese la edad del paciente: ";
+        cin >> edad;
+    } while(edad < 1 || edad > 99);
+
+    if (edad <= 12) {
+        cout << "No se aplica ningún gasto adicional.\n";
+        procesarEstancia(costoBase, false);
+    } else {
+        cout << "\n*Se aplicará un costo adicional* ($70)\n";
+        procesarEstancia(costoBase, true);
+    }
+}
+
+void mostrarMenu() {
+    int opcion;
+    bool continuar = true;
+
+    while (continuar) {
+        cout << "\nLas enfermedades y sus precios son: \n";
+        cout << "1. Enfermedad 1 -- $" << COSTO_ENFERMEDAD_1 << endl;
+        cout << "2. Enfermedad 2 -- $" << COSTO_ENFERMEDAD_2 << endl;
+        cout << "3. Enfermedad 3 -- $" << COSTO_ENFERMEDAD_3 << endl;
+        cout << "4. Salir\n";
+        cin >> opcion;
+
+        switch(opcion) {
+            case 1:
+                verificarEdad(COSTO_ENFERMEDAD_1);
+                break;
+            case 2:
+                verificarEdad(COSTO_ENFERMEDAD_2);
+                break;
+            case 3:
+                verificarEdad(COSTO_ENFERMEDAD_3);
+                break;
+            case 4:
+                cout << "Fin del programa\n";
+                continuar = false;
+                break;
+            default:
+                cout << "*************\n";
+                cout << "Error: opción no válida\n";
+                cout << "*************\n";
+                break;
+        }
+    }
+}
+
+int main() {
+    mostrarMenu();
+    return 0;
+}
+``
